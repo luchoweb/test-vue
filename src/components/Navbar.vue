@@ -20,9 +20,20 @@ export default {
     box-shadow: 0px 0px 7px #aaa;
     margin-bottom: 1rem;
 
-    a, i {
+    .navbar-brand, .material-icons {
       color:#f06292;
     }
+
+    .navbar-brand {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 85%;
+
+      @media (max-width: 590px) {
+        width: 70%;
+      }
+    }
+    
   }
 
   .icons {
