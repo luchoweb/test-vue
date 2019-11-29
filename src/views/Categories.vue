@@ -1,9 +1,15 @@
 <template>
   <main class="categories">
     <Navbar />
-    <ul v-for="(category, i) of categories" :key="i">
-      <li>
+    <ul class="categories">
+      <li v-for="(category, i) of categories" :key="i">
         {{category.name}}
+      </li>
+    </ul>
+
+    <ul class="sections">
+      <li v-for="(section, i) of sections" :key="i">
+        {{section.name}}
       </li>
     </ul>
   </main>
@@ -29,3 +35,6 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+</style>
