@@ -24,7 +24,7 @@
             <img :src="urlApi + section.image" :alt="section.name" class="banner">
             <ul class="products clearfix">
               <li v-for="(product, i) of section.products" :key="i" class="product">
-                <router-link v-bind:to="'/category/products/' + product.id">
+                <router-link v-bind:to="'/category/' + product.categories.id +'/'+ product.id">
                   <img :src="urlApi + product.image.url" :alt="product.name" class="img">
                   <p class="category text-left text-uppercase">{{ product.categories.category }}</p>
                   <p class="name text-left">{{ product.name }}</p>
@@ -36,37 +36,40 @@
         </ul>
       </div>
     </div>
+
+    <MenuBottom />
   </main>
 </template>
 
 <script>
-import Vuex from 'vuex';
-import Navbar from '@/components/Navbar.vue';
+  import Vuex from 'vuex';
+  import Navbar from '@/components/Navbar.vue';
+  import MenuBottom from '@/components/MenuBottom.vue';
 
-export default {
-  name: 'categories',
-  components: {
-    Navbar
-  },
-  data() {
-    return {
-      bannerTopUri: 'https://mitienda.moda/img/productos-de-entrega-inmediata.e07d1e57.png'
+  export default {
+    name: 'categories',
+    components: {
+      Navbar,
+      MenuBottom
+    },
+    data() {
+      return {
+        bannerTopUri: 'https://mitienda.moda/img/productos-de-entrega-inmediata.e07d1e57.png'
+      }
+    },
+    created() {
+      // Execute actions for get data from API
+      this.$store.dispatch('getCategories', 'getSections');
+    },
+    computed: {
+      // Get state from store
+      ...Vuex.mapState(['categories', 'sections', 'urlApi']),
+    },
+    methods: {
+      // Get actions from store
+      ...Vuex.mapActions(['getCategories', 'getSections'])
     }
-  },
-  created() {
-    // Execute actions for get data from API
-    this.$store.dispatch('getCategories', 'getSections');
-  },
-  computed: {
-    // Get state from store
-    ...Vuex.mapState(['categories', 'sections', 'urlApi']),
-  },
-  methods: {
-    // Get actions from store
-    ...Vuex.mapActions(['getCategories', 'getSections'])
   }
-}
-
 </script>
 
 <style scoped lang="scss">
@@ -76,6 +79,7 @@ export default {
 
   .content {
     margin: 0 auto;
+    padding-bottom: 55px;
     width: 350px;
 
     @media (max-width: 370px) {
@@ -142,11 +146,17 @@ export default {
 
             .product {
               border: 1px solid #e9e9e9;
+              border-bottom: 4px solid #e9e9e9;
               border-radius: 5px 5px 0 0;
               float: left;
               margin-bottom: 20px;
               padding: 2%;
               width: 48%;
+
+              &:hover {
+                border: 1px solid $pink;
+                border-bottom: 4px solid $pink;
+              }
 
               &:nth-child(odd) {
                 margin-right: 4%;
