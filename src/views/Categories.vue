@@ -11,7 +11,7 @@
         <h3 class="text-left">Líneas</h3>
 
         <ul class="categories">
-          <li v-for="(category, i) of categories" :key="i" v-show="category.active == 1" class="category">
+          <li v-for="(category, i) of categoriesApi" :key="i" v-show="category.active == 1" class="category">
             <router-link v-bind:to="'/category/' + category.id">
               <img :src="urlApi + category.image" :alt="category.name">
               <button class="btn btn-sm btn-dark">Ver más</button>
@@ -20,7 +20,7 @@
         </ul>
 
         <ul class="sections">
-          <li v-for="(section, i) of sections" :key="i" class="section">
+          <li v-for="(section, i) of sectionsApi" :key="i" class="section">
             <img :src="urlApi + section.image" :alt="section.name" class="banner">
             <ul class="products clearfix">
               <li v-for="(product, i) of section.products" :key="i" class="product">
@@ -63,7 +63,7 @@
     },
     computed: {
       // Get state from store
-      ...Vuex.mapState(['categories', 'sections', 'urlApi']),
+      ...Vuex.mapState(['categoriesApi', 'sectionsApi', 'urlApi']),
     },
     methods: {
       // Get actions from store
@@ -78,14 +78,6 @@
   $black: #555;
 
   .content {
-    margin: 0 auto;
-    padding-bottom: 55px;
-    width: 350px;
-
-    @media (max-width: 370px) {
-      width: 100%;
-    }
-
     .banner-top {
       margin-bottom: 15px;
       position: relative;

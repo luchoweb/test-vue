@@ -6,17 +6,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     urlApi: 'https://api.tissini.app',
-    categories: [],
-    sections: []
+    categoriesApi: [],
+    sectionsApi: [],
+    productsApi: []
   },
   mutations: {
     showCategories (state, categoriesActions) {
       // Push data to state
-      state.categories = categoriesActions;
+      state.categoriesApi = categoriesActions;
     },
     showSections (state, sectionsActions) {
       // Push data to state
-      state.sections = sectionsActions;
+      state.sectionsApi = sectionsActions;
+    },
+    showProducts (state, productsActions) {
+      // Push data to state
+      state.productsApi = productsActions;
     }
   },
   actions: {
@@ -34,6 +39,14 @@ export default new Vuex.Store({
       // Commit to mutations
       commit('showCategories', categories);
       commit('showSections', sections);
+    },
+    getProducts: async function ({ commit }, id) {
+      // Get products by ID Category
+      const dataProducts = await fetch(this.state.urlApi + '/api/v2/categories/'+ id +'/products');
+      let productsApi = await dataProducts.json();
+
+      // Commit to mutations
+      commit('showProducts', productsApi);
     }
   }
 })
